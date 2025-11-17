@@ -1,0 +1,9 @@
+{
+  "name": "rules-evaluator",
+  "version": "1.0.0",
+  "description": "Rules Engine Evaluator Lambda Function",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.1400.0"
+  }
+}
