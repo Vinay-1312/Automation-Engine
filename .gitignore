@@ -262,3 +262,6 @@ mcp-client/src/node_modules/
 mcp-client/dist/
 mcp-client/.env
 mcp-client/package-lock.json
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.github\instructions\snyk_rules.instructions.md

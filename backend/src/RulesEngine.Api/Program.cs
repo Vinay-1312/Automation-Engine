@@ -49,7 +49,13 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
+// Add EventBridge
+builder.Services.AddAWSService<IAmazonEventBridge>();
+
+// Register your services
+builder.Services.AddScoped<IEventBridgeService, EventBridgeService>();
 // Add Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
