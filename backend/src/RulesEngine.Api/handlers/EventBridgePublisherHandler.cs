@@ -1,8 +1,8 @@
 // EventBridgePublisherHandler.cs
-namespace YourProject.Application.EventHandlers.Generic;
+using MediatR;
 
-using YourProject.Domain.Events;
-using YourProject.Infrastructure.EventBridge;
+
+
 
 public class EventBridgePublisherHandler<T> : INotificationHandler<T>
     where T : IDomainEvent

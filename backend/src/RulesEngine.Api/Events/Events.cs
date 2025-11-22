@@ -1,4 +1,5 @@
 using MediatR;
+using System.Text.Json.Serialization;
 
 // Base event interface
 public interface IDomainEvent : INotification
@@ -14,8 +15,8 @@ public record DomainEventBase : IDomainEvent
 {
     public string EventId { get; } = Guid.NewGuid().ToString();
     public DateTime OccurredOn { get; } = DateTime.UtcNow;
-    public abstract string EventType { get; }
-    public abstract string Source { get; }
+    public virtual string EventType { get; }
+    public virtual string Source { get; }
 }
 
 // Specific events

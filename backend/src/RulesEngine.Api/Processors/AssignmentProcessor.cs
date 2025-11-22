@@ -14,6 +14,7 @@ public class AssignmentProcessor : IAssignmentProcessor
 {
     private readonly ILogger<AssignmentProcessor> _logger;
     private readonly IAmazonEventBridge _eventBridge;
+ 
 
     public AssignmentProcessor(ILogger<AssignmentProcessor> logger, IAmazonEventBridge eventBridge)
     {
@@ -28,15 +29,15 @@ public class AssignmentProcessor : IAssignmentProcessor
             _logger.LogInformation("Processing assignment request {Id}", request.Id);
             
             // Simulate async processing
-            await Task.Delay(100); // Simulating some async work
-            var businessData = new
-            {
-                version = 1,
-                ruleId = "282e10be-7891-46d1-b046-66b8e7196645",
-                assignmentId = "asg-001",
-                claim = "cal123",
-                createdAt = "2024-01-15T10:30:00Z"
-            };
+          
+           var businessData = new AssignmentEvent
+{
+    Version = 1,
+    RuleId = "282e10be-7891-46d1-b046-66b8e7196645",
+    AssignmentId = "asg-001",
+    Claim = "cal123",
+    CreatedAt = DateTime.Parse("2024-01-15T10:30:00Z")
+};
             
             var Event = new PutEventsRequest
             {
@@ -49,7 +50,8 @@ public class AssignmentProcessor : IAssignmentProcessor
                         DetailType = "rule-evaluation-request",   // ✅ Correct location
                         Detail = JsonSerializer.Serialize(businessData), // ✅ Business data as JSON string
                         Time = DateTime.UtcNow,                 // ✅ Optional - AWS can set this
-                        EventBusName = "rules-engine-events", 
+                        EventBusName = "rules-engine-events",
+                        
                         // AWS automatically adds:
                         // - account
                         // - region  
@@ -62,6 +64,7 @@ public class AssignmentProcessor : IAssignmentProcessor
                 }
             };
             var response = await _eventBridge.PutEventsAsync(Event).ConfigureAwait(false);
+            
             // TODO: Add your assignment logic here
             // For example: await _repository.SaveAssignmentAsync(request);
             
